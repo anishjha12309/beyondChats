@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- BeyondChats Logo - Speech bubble with smile - Black version for light mode -->
+  <circle cx="50" cy="45" r="35" fill="currentColor"/>
+  <path d="M25 70 L30 85 L45 65" fill="currentColor"/>
+  <path d="M35 45 Q50 55 65 45" stroke="white" stroke-width="5" stroke-linecap="round" fill="none"/>
+</svg>

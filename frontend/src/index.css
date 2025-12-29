@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Mode - Clean whites and subtle grays (opposite of dark) */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 8%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
+    --primary: 0 0% 8%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 8%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 94%;
+    --accent-foreground: 0 0% 8%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 8%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark Mode - Abduzeedo inspired: deep blacks with subtle contrast */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 80%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+}
+
+/* Typography - Bold and clean like Abduzeedo */
+.title-xl {
+  @apply text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight;
+}
+
+.title-lg {
+  @apply text-2xl sm:text-3xl font-bold tracking-tight;
+}
+
+.title-md {
+  @apply text-xl font-semibold tracking-tight;
+}
+
+/* Article card - minimal, clean hover */
+.article-card {
+  @apply block p-5 rounded-lg border border-transparent;
+  @apply hover:border-border hover:bg-card;
+}
+
+/* Tag/Badge styling */
+.tag {
+  @apply inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full;
+  @apply bg-muted text-muted-foreground;
+}
+
+.tag-success {
+  @apply bg-emerald-500/10 text-emerald-600 dark:text-emerald-400;
+}
+
+/* Simple hover underline */
+.link-underline:hover {
+  text-decoration: underline;
+}
+
+/* Clean prose styling */
+.prose-abduzeedo {
+  @apply prose prose-neutral dark:prose-invert max-w-none;
+  @apply prose-headings:font-bold prose-headings:tracking-tight;
+  @apply prose-p:text-muted-foreground prose-p:leading-relaxed;
+  @apply prose-a:text-foreground prose-a:font-medium prose-a:no-underline hover:prose-a:underline;
+  @apply prose-strong:text-foreground prose-strong:font-semibold;
+}
+
+/* Simple separator */
+.separator {
+  @apply h-px w-full bg-border;
+}
