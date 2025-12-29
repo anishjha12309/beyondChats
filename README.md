@@ -8,7 +8,7 @@
 
 **A professional full-stack solution for scraping, analyzing, and enhancing content using State-of-the-Art AI.**
 
-[Live Demo 🚀](https://your-deployment-url.vercel.app) • [API Documentation 📖](https://your-backend-url.railway.app/docs) • [Report Bug 🐛](https://github.com/your-username/beyondchats-assignment/issues)
+[Live Demo 🚀](https://your-deployment-url.vercel.app) • [API Documentation 📖](https://your-backend-url.railway.app/docs) • [Report Bug 🐛](https://github.com/anishjha12309/beyondChats/issues)
 
 </div>
 
@@ -105,7 +105,7 @@ graph TD
 | :--- | :--- | :--- |
 | **Frontend** | ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB) ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) | React 18, Vite, Lucide Icons, React Router |
 | **Backend** | ![Node](https://img.shields.io/badge/Node.js-43853D?style=flat-square&logo=node.js&logoColor=white) ![Express](https://img.shields.io/badge/Express.js-000000?style=flat-square&logo=express&logoColor=white) | Express.js, Axios, Cheerio, Dotenv |
-| **Database** | ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=flat-square&logo=sqlite&logoColor=white) ![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=flat-square&logo=sequelize&logoColor=white) | SQLite3, Sequelize ORM |
+| **Database** | ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat-square&logo=postgresql&logoColor=white) ![Neon](https://img.shields.io/badge/Neon-00E599?style=flat-square&logo=neon&logoColor=white) | PostgreSQL (Neon), Sequelize ORM |
 | **AI & ML** | ![Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=flat-square&logo=google&logoColor=white) | Google Generative AI SDK |
 
 ---
@@ -120,7 +120,7 @@ Follow these steps to get the project running on your local machine.
 
 ### 1. clone the Repository
 ```bash
-git clone https://github.com/your-username/beyondchats-assignment.git
+git clone https://github.com/anishjha12309/beyondChats.git
 cd beyondchats-assignment
 ```
 
@@ -185,8 +185,4 @@ npm run dev
 2.  Add Environment Variables from your local `.env`.
 3.  Deploy.
 
-<div align="center">
 
-**Built with ❤️ for BeyondChats**
-
-</div>
