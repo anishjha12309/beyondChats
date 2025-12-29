@@ -22,7 +22,8 @@ function App() {
       const response = await fetch(`${API_URL}/articles`)
       const data = await response.json()
       if (data.success) {
-        setArticles(data.data)
+        // Reverse to show newest first (LIFO/stack behavior)
+        setArticles([...data.data].reverse())
       } else {
         setError('Failed to fetch articles')
       }

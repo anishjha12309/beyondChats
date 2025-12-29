@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, Download, Loader2, ExternalLink, RefreshCw } from 'lucide-react'
+import ReactPaginate from 'react-paginate'
 
 function ScrapeArticle({ apiUrl, onArticleCreated }) {
   const navigate = useNavigate()
@@ -8,18 +9,42 @@ function ScrapeArticle({ apiUrl, onArticleCreated }) {
   const [loading, setLoading] = useState(true)
   const [importing, setImporting] = useState(null)
   const [error, setError] = useState(null)
-  const [page, setPage] = useState(15)
+  const [page, setPage] = useState(0) // react-paginate uses 0-indexed
+  const [totalPages, setTotalPages] = useState(0)
+  const [loadingPages, setLoadingPages] = useState(true)
 
-  useEffect(() => { fetchAvailableArticles() }, [page])
+  // Fetch available pages on mount
+  useEffect(() => {
+    const fetchPages = async () => {
+      try {
+        setLoadingPages(true)
+        const response = await fetch(`${apiUrl}/beyondchats/pages`)
+        const data = await response.json()
+        if (data.success) {
+          setTotalPages(data.total || data.pages.length)
+        }
+      } catch {
+        setTotalPages(15)
+      } finally {
+        setLoadingPages(false)
+      }
+    }
+    fetchPages()
+  }, [apiUrl])
+
+  useEffect(() => { 
+    fetchAvailableArticles() 
+  }, [page])
 
   const fetchAvailableArticles = async () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch(`${apiUrl}/beyondchats/articles?page=${page}`)
+      // Convert 0-indexed to 1-indexed for API
+      const response = await fetch(`${apiUrl}/beyondchats/articles?page=${page + 1}`)
       const data = await response.json()
       if (data.success) {
-        setArticles(data.data)
+        setArticles([...data.data].reverse())
       } else {
         setError('Failed to fetch articles from BeyondChats')
       }
@@ -57,6 +82,10 @@ function ScrapeArticle({ apiUrl, onArticleCreated }) {
     }
   }
 
+  const handlePageChange = ({ selected }) => {
+    setPage(selected)
+  }
+
   return (
     <div className="max-w-3xl">
       <button onClick={() => navigate('/')} className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-8">
@@ -71,21 +100,6 @@ function ScrapeArticle({ apiUrl, onArticleCreated }) {
         <button onClick={fetchAvailableArticles} disabled={loading} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
           <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
         </button>
-      </div>
-
-      <div className="flex items-center gap-4 mb-6">
-        <span className="text-sm text-muted-foreground">Blog Page:</span>
-        <div className="flex gap-2">
-          {[15, 14, 13, 12].map(p => (
-            <button
-              key={p}
-              onClick={() => setPage(p)}
-              className={`px-3 py-1.5 text-sm rounded-md ${page === p ? 'bg-foreground text-background' : 'bg-muted text-muted-foreground hover:text-foreground'}`}
-            >
-              {p}
-            </button>
-          ))}
-        </div>
       </div>
 
       {error && (
@@ -134,6 +148,39 @@ function ScrapeArticle({ apiUrl, onArticleCreated }) {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Pagination at bottom */}
+      {!loadingPages && totalPages > 0 && (
+        <div className="mt-8 pt-6 border-t border-border">
+          <ReactPaginate
+            pageCount={totalPages}
+            pageRangeDisplayed={3}
+            marginPagesDisplayed={1}
+            onPageChange={handlePageChange}
+            forcePage={page}
+            containerClassName="flex items-center justify-center gap-1"
+            pageClassName=""
+            pageLinkClassName="px-3 py-1.5 text-sm rounded-md bg-muted text-muted-foreground hover:text-foreground transition-colors"
+            activeClassName=""
+            activeLinkClassName="!bg-foreground !text-background"
+            previousClassName=""
+            previousLinkClassName="px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            nextClassName=""
+            nextLinkClassName="px-3 py-1.5 text-sm rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            breakClassName=""
+            breakLinkClassName="px-2 text-muted-foreground"
+            disabledClassName="opacity-30 cursor-not-allowed"
+            disabledLinkClassName="pointer-events-none"
+            previousLabel="← Prev"
+            nextLabel="Next →"
+            breakLabel="..."
+            renderOnZeroPageCount={null}
+          />
+          <p className="text-center mt-3 text-xs text-muted-foreground">
+            Page {page + 1} of {totalPages}
+          </p>
         </div>
       )}
 

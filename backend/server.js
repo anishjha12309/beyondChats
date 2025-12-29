@@ -287,6 +287,39 @@ app.post('/api/articles/:id/enhance', async (req, res) => {
   }
 });
 
+// BeyondChats: Discover available blog pages dynamically
+app.get('/api/beyondchats/pages', async (req, res) => {
+  try {
+    const url = 'https://beyondchats.com/blogs/';
+    const response = await axios.get(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+    });
+    const $ = cheerio.load(response.data);
+    
+    // Find pagination links and extract all page numbers
+    const pageNumbers = new Set([1]); // Page 1 always exists
+    $('a.page-numbers, .nav-links a, .pagination a, a[href*="/page/"]').each((_, el) => {
+      const href = $(el).attr('href') || '';
+      const match = href.match(/\/page\/(\d+)/);
+      if (match) pageNumbers.add(parseInt(match[1]));
+      
+      // Also check text content for page numbers
+      const text = $(el).text().trim();
+      if (/^\d+$/.test(text)) pageNumbers.add(parseInt(text));
+    });
+    
+    // Get the maximum page number (could be from "last" link or highest found)
+    let maxPage = Math.max(...pageNumbers);
+    
+    // Generate array of all pages from 1 to max
+    const pages = Array.from({ length: maxPage }, (_, i) => i + 1);
+    
+    res.json({ success: true, pages, total: maxPage });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // BeyondChats: List available articles from a blog page
 app.get('/api/beyondchats/articles', async (req, res) => {
   try {
