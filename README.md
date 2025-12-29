@@ -8,7 +8,7 @@
 
 **A professional full-stack solution for scraping, analyzing, and enhancing content using State-of-the-Art AI.**
 
-[Live Demo 🚀](https://your-deployment-url.vercel.app) • [API Documentation 📖](https://your-backend-url.railway.app/docs) • [Report Bug 🐛](https://github.com/anishjha12309/beyondChats/issues)
+[Live Demo 🚀](https://your-deployment-url.vercel.app) • [API Documentation 📖](#api-endpoints) • [Report Bug 🐛](https://github.com/anishjha12309/beyondChats/issues)
 
 </div>
 
@@ -36,14 +36,14 @@ graph TD
     subgraph Server ["⚙️ Backend (Express.js)"]
         API[REST API Layer]
         Scraper[Cheerio Scraper]
-        DB[(SQLite Database)]
+        DB[(Database: Neon PostgreSQL)]
         Orchestrator[Enhancement Logic]
     end
 
     subgraph External ["☁️ External Services"]
         BC[BeyondChats Blog]
-        Google[Google Search / SerpAPI]
-        Gemini[Google Gemini AI]
+        Search[DuckDuckGo / SerpAPI]
+        Gemini[Google Gemini 2.5 Flash Lite]
     end
 
     %% Flow
@@ -54,7 +54,7 @@ graph TD
     
     UI -->|Enhance Request| API
     API -->|Trigger| Orchestrator
-    Orchestrator -->|Search References| Google
+    Orchestrator -->|Search References| Search
     Orchestrator -->|Generate Content| Gemini
     Gemini -->|Enhanced Text| DB
     
@@ -69,33 +69,34 @@ graph TD
 
 ### 🧠 Data Flow Pipeline
 
-1.  **Ingestion**: The `Scraper` module targets specific legacy pages (14 & 15) of the BeyondChats blog, extracting core content while filtering out noise.
-2.  **Persistence**: Data is normalized and stored in a local `SQLite` database, ensuring data integrity and quick retrieval.
+1.  **Ingestion (Import)**: Users browse BeyondChats blog pages (14, 15, etc.) directly in the app. The system scrapes the chosen article's content while filtering out noise.
+2.  **Persistence**: Data is normalized and stored.
+    *   **Development**: Uses `SQLite` for zero-config local setup.
+    *   **Production**: Uses `Neon (PostgreSQL)` for robust, scalable storage.
 3.  **Enhancement**:
-    *   **Contextual Search**: The system queries Google/DuckDuckGo for high-authority reference material related to the article topic.
-    *   **Intelligence Injection**: **Google Gemini (gemini-2.0-flash-lite)** processes the original content alongside scraped references.
-    *   **Synthesis**: A new, engaging version of the article is generated, complete with correct citations and Markdown formatting.
-4.  **Presentation**: The React frontend renders the dual-view interface, allowing seamless comparison between the original and enhanced versions.
+    *   **Contextual Search**: Queries Google/DuckDuckGo for high-authority reference material.
+    *   **Intelligence Injection**: **Google Gemini 2.5 Flash Lite** processes the original content alongside scraped references.
+    *   **Synthesis**: Generates a new, engaging version with correct citations and Markdown formatting.
+4.  **Presentation**: The React frontend renders a dual-view interface, allowing seamless comparison between "Original" and "Enhanced" versions.
 
 ---
 
 ## ✨ Key Features
 
 ### Phase 1: Robust Backend Foundation ✅
-*   **Precision Scraping**: Custom-built `Cheerio` scraper optimized for BeyondChats DOM structure.
-*   **Resilient API**: RESTful endpoints with error handling, rate limiting protection, and CORS configuration.
-*   **Database**: Zero-config `SQLite` setup with `Sequelize` ORM for easy schema management.
+*   **Dual Database Support**: Seamlessly finds `DATABASE_URL` to switch between SQLite (local) and **Neon PostgreSQL** (production).
+*   **Precision Scraping**: Custom-built `Cheerio` scraper optimized for BeyondChats DOM.
+*   **Resilient API**: RESTful endpoints with error handling and rate limiting protection.
 
 ### Phase 2: AI-Powered Engine ✅
-*   **Smart Search**: Fallback-enabled search mechanism (SerpAPI → DuckDuckGo) to ensure reference discovery.
-*   **Anti-Bot Bypass**: Advanced filtering to exclude un-scrapeable domains (Medium, Reddit) and prioritize high-quality blogs.
-*   **Context-Aware Prompts**: Engineered prompts that guide the LLM to preserve the original author's voice while improving structure.
+*   **Smart Search**: Fallback-enabled search (SerpAPI → DuckDuckGo) to ensure reference discovery.
+*   **Context-Aware Prompts**: Engineered prompts for preserving author voice.
+*   **One-Click Enhancement**: "Enhance with AI" button directly in the UI.
 
 ### Phase 3: Premium Frontend Experience ✅
-*   **Glassmorphism UI**: Modern aesthetic with backdrop blurs, subtle gradients, and crisp typography.
-*   **Dark Mode**: A carefully crafted dark theme using Tailwind CSS variables for visual comfort.
-*   **Responsive**: Fluid layout that adapts perfectly from desktop to mobile devices.
-*   **Interactive**: Smooth transitions, loading skeletons, and intuitive navigation.
+*   **Modern UI**: Glassmorphism, dark/light themes, and responsive design.
+*   **Import Workflow**: Browse and import directly from external blog pages.
+*   **Comparison View**: Tabbed interface to switch between original and AI-enhanced versions.
 
 ---
 
@@ -105,23 +106,21 @@ graph TD
 | :--- | :--- | :--- |
 | **Frontend** | ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB) ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) | React 18, Vite, Lucide Icons, React Router |
 | **Backend** | ![Node](https://img.shields.io/badge/Node.js-43853D?style=flat-square&logo=node.js&logoColor=white) ![Express](https://img.shields.io/badge/Express.js-000000?style=flat-square&logo=express&logoColor=white) | Express.js, Axios, Cheerio, Dotenv |
-| **Database** | ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat-square&logo=postgresql&logoColor=white) ![Neon](https://img.shields.io/badge/Neon-00E599?style=flat-square&logo=neon&logoColor=white) | PostgreSQL (Neon), Sequelize ORM |
-| **AI & ML** | ![Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=flat-square&logo=google&logoColor=white) | Google Generative AI SDK |
+| **Database** | ![Neon](https://img.shields.io/badge/Neon-00E599?style=flat-square&logo=postgresql&logoColor=white) | Neon (Serverless PostgreSQL), Sequelize ORM |
+| **AI & ML** | ![Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=flat-square&logo=google&logoColor=white) | Google Generative AI SDK (Gemini 2.5 Flash Lite) |
 
 ---
 
 ## 🚀 Local Setup Instructions
 
-Follow these steps to get the project running on your local machine.
-
 ### Prerequisites
-*   Node.js (v18 or higher)
-*   npm or yarn
+*   Node.js (v18+)
+*   npm
 
-### 1. clone the Repository
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/anishjha12309/beyondChats.git
-cd beyondchats-assignment
+cd beyondchats
 ```
 
 ### 2. Configure Backend
@@ -129,66 +128,54 @@ cd beyondchats-assignment
 cd backend
 npm install
 ```
-Create a `.env` file in the `backend/` directory:
+Create `.env` in `backend/`:
 ```env
-# Production Database (Neon PostgreSQL)
-DATABASE_URL=your_neon_connection_string
+# AI Configuration (Required)
+GEMINI_API_KEY=your_gemini_key
 
-# AI Configuration (Get key from ai.google.dev)
-GEMINI_API_KEY=your_gemini_api_key
+# Database (Optional - defaults to local SQLite if omitted)
+# For production use Neon:
+DATABASE_URL=postgres://user:pass@ep-xyz.neon.tech/neondb
 
-# Search Configuration (Optional - Defaults to Free DuckDuckGo)
-SERP_API_KEY=your_serp_api_key
+# Search (Optional)
+SERP_API_KEY=your_serp_key
 ```
 
-**Get Neon Database URL:**
-1. Sign up at [neon.tech](https://neon.tech) (free)
-2. Create a new project
-3. Copy the connection string from your project dashboard
-4. Paste it as `DATABASE_URL` in `.env`
-
-### 3. Initialize & Start Backend
+### 3. Start Backend
 ```bash
-# Scrape the initial seed data (5 oldest articles)
-npm run scrape
-
-# Start the development server
 npm run dev
 ```
-*The backend will run on `http://localhost:3000`*
+*Runs on `http://localhost:3000` with hot-reloading (nodemon).*
 
-### 4. Configure & Start Frontend
-Open a new terminal window:
+### 4. Start Frontend
+New terminal:
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-*The frontend will run on `http://localhost:5173`*
+*Runs on `http://localhost:5173`.*
 
 ---
 
-## 🧪 Testing the Workflow
+## 🧪 Usage Workflow
 
-1.  **View Articles**: Open the frontend. You should see the 5 initial articles.
-2.  **Import More**: Navigate to the "Import" page. Select a page number and click **Import** on any article card.
-3.  **Enhance**: Go to an article's detail page. Click the **"Enhance with AI"** button in the top right.
-    *   *Note: This process takes ~30 seconds as it searches, scrapes references, and generates content.*
-4.  **Compare**: Toggle between "Original" and "Enhanced" tabs to see the transformation.
+1.  **Import**: Go to the "Import" page, select a blog page, and click **Import** on an article.
+2.  **Enhance**: Open the article and click **"Enhance with AI"** (top right).
+3.  **View**: Wait ~30s for the process to complete, then view the "Enhanced" tab with citations.
 
 ---
 
 ## 📦 Deployment
 
+### Backend (Render)
+1.  Push to GitHub.
+2.  Create Web Service on [Render](https://render.com).
+3.  Set Build Command: `npm install`
+4.  Set Start Command: `npm start`
+5.  Add Env Vars: `GEMINI_API_KEY`, `DATABASE_URL` (Neon Connection String), `Node 18+`.
+
 ### Frontend (Vercel)
-1.  Push code to GitHub.
-2.  Import `frontend` directory into Vercel.
-3.  Add Environment Variable: `VITE_API_URL` = `https://your-backend.railway.app/api`
-4.  Deploy.
-
-### Backend (Railway)
-1.  Import `backend` directory into Railway.
-2.  Add Environment Variables from your local `.env`.
+1.  Import `frontend` folder to [Vercel](https://vercel.com).
+2.  Set Env Var: `VITE_API_URL` = `https://your-render-app.onrender.com/api`.
 3.  Deploy.
-
-
