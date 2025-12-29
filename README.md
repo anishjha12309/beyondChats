@@ -131,8 +131,8 @@ npm install
 ```
 Create a `.env` file in the `backend/` directory:
 ```env
-# Server Config
-PORT=3000
+# Production Database (Neon PostgreSQL)
+DATABASE_URL=your_neon_connection_string
 
 # AI Configuration (Get key from ai.google.dev)
 GEMINI_API_KEY=your_gemini_api_key
@@ -140,6 +140,12 @@ GEMINI_API_KEY=your_gemini_api_key
 # Search Configuration (Optional - Defaults to Free DuckDuckGo)
 SERP_API_KEY=your_serp_api_key
 ```
+
+**Get Neon Database URL:**
+1. Sign up at [neon.tech](https://neon.tech) (free)
+2. Create a new project
+3. Copy the connection string from your project dashboard
+4. Paste it as `DATABASE_URL` in `.env`
 
 ### 3. Initialize & Start Backend
 ```bash

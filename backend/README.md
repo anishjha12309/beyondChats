@@ -1,25 +1,23 @@
-# Backend - BeyondChats Article API
+# Backend API
 
-Express.js REST API with SQLite database for managing BeyondChats articles.
+Express.js backend with SQLite database and AI enhancement capabilities.
 
-## Setup
+## Quick Start
 
 ```bash
 npm install
-```
-
-## Run Server
-
-```bash
 npm start
 ```
 
-Server runs at `http://localhost:3000`
+Server runs on `http://localhost:3000`
 
-## Run Scraper
+## Environment Variables
 
-```bash
-npm run scrape
+Create a `.env` file:
+```
+GEMINI_API_KEY=your_gemini_api_key
+SERP_API_KEY=your_serp_api_key (optional)
+OPENAI_API_KEY=your_openai_key (optional)
 ```
 
 ## API Endpoints
@@ -27,8 +25,14 @@ npm run scrape
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/articles` | List all articles |
-| GET | `/api/articles/:id` | Get single article |
-| POST | `/api/articles` | Create article |
+| GET | `/api/articles/:id` | Get article by ID |
+| POST | `/api/articles` | Create new article |
 | PUT | `/api/articles/:id` | Update article |
 | DELETE | `/api/articles/:id` | Delete article |
-| GET | `/api/health` | Health check |
+| POST | `/api/articles/:id/enhance` | AI enhance article |
+| GET | `/api/beyondchats/articles?page=14` | List BeyondChats blog articles |
+| POST | `/api/beyondchats/scrape` | Import article from BeyondChats |
+
+## Deployment
+
+See [DEPLOYMENT.md](../DEPLOYMENT.md) for Render deployment instructions.
