@@ -8,7 +8,7 @@
 
 **A professional full-stack solution for scraping, analyzing, and enhancing content using State-of-the-Art AI.**
 
-[Live Demo 🚀](https://your-deployment-url.vercel.app) • [API Documentation 📖](#api-endpoints) • [Report Bug 🐛](https://github.com/anishjha12309/beyondChats/issues)
+[Live Demo 🚀](https://beyond-chats-silk.vercel.app) • [Backend API 📖](https://beyondchats-bsrw.onrender.com/api/health) • [Report Bug 🐛](https://github.com/anishjha12309/beyondChats/issues)
 
 </div>
 
